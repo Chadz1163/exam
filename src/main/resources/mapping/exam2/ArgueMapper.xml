@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ruisdata.quiz.dao.exam2.ArgueMapper">
+
+    <resultMap id="userInfo" type="com.ruisdata.quiz.PO.UserInfoPO">
+        <id column="id" property="userId"/>
+        <result column="nickname" property="username"/>
+        <result column="avatar" property="avatar"/>
+    </resultMap>
+
+    <resultMap id="argue" type="com.ruisdata.quiz.PO.ArguePO">
+        <id column="id" property="id"/>
+        <result column="argue_title" property="argueTitle"/>
+        <result column="argue_content" property="argueContent"/>
+        <result column="argue_picture" property="arguePicture"/>
+        <result column="argue_participants" property="argueParticipants"/>
+    </resultMap>
+
+    <resultMap id="argueOpinion" type="com.ruisdata.quiz.PO.ArgueOpinionPO">
+        <id column="id" property="id"/>
+        <result column="argue_id" property="argueId"/>
+        <result column="user_id" property="userId"/>
+        <result column="argue_position" property="opinionPosition"/>
+        <result column="opinion_content" property="opinionContent"/>
+        <result column="opinion_likes" property="opinionLikes"/>
+        <result column="create_time" property="createTime"/>
+    </resultMap>
+
+    <select id="getArgueIdWithOpinionCount" resultType="Integer">
+        SELECT COUNT(*) from argue_opinion where argue_id = #{argueId}
+    </select>
+
+    <select id="getArgueList" resultMap="argue">
+        SELECT * from argue;
+    </select>
+
+    <select id="getArgueOpinionByLikeCount" resultMap="argueOpinion">
+        SELECT * from argue_opinion WHERE argue_id = #{argueId} ORDER BY opinion_likes DESC LIMIT 1
+    </select>
+
+    <select id="getUserInfoById" resultMap="userInfo">
+        SELECT id, nickname, avatar FROM user_info WHERE id = #{userId}
+    </select>
+
+    <select id="getArgueTitleById" resultType="String">
+        SELECT argue_title from argue where id = #{argueId}
+    </select>
+
+</mapper>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ruisdata.quiz.dao.exam1.CityMapper">
+
+    <resultMap id="baseResult" type="com.ruisdata.quiz.PO.City">
+        <id column="id" property="id" />
+        <result column="name" property="cityName" />
+    </resultMap>
+
+    <select id="getCities" resultMap="baseResult">
+        SELECT * from city where name = #{cityName};
+    </select>
+
+
+</mapper>
